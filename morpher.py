@@ -2,6 +2,11 @@
 from openpyxl import load_workbook, Workbook
 import pymorphy2
 
+class Phrase:
+    def __init__(self, raw_phrase):
+        self.origin_phrase = raw_phrase
+        
+
 wb = load_workbook("excel1.xlsx")
 ws = wb['Лист1']
 column = ws['A']
