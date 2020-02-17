@@ -5,7 +5,7 @@ import pymorphy2
 class Phrase:
     def __init__(self, raw_phrase):
         self.origin_phrase = raw_phrase
-        
+
 
 wb = load_workbook("excel1.xlsx")
 ws = wb['Лист1']
@@ -35,7 +35,7 @@ for item in items_list:
                            'accs_plur': parsed_item.inflect({'plur', 'accs'}).word,
                            'ablt_plur': parsed_item.inflect({'plur', 'ablt'}).word,
                            'loct_plur': parsed_item.inflect({'plur', 'loct'}).word}
-                           
+
 #print(morphed_items)
 for item in morphed_items:
     print(item, ": ", ", ".join(morphed_items[item].values()))
