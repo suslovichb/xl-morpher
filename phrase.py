@@ -14,13 +14,21 @@ class Phrase:
         phrase = phrase.replace('||', '|')
         return phrase.split('|')
 
-    def morph(self, number_category, case):
+    def morph(self, case, number_category):
         analyzer = pymorphy2.MorphAnalyzer()
         morphed_phrase_items = []
         for item in self.phrase_splitted:
             parsed_item = analyzer.parse(item)[0]
+            if parsed_item.tag.POS == 'PREP':
+                morphed_phrase_items +=  self.phrase_splitted[self.phrase_splitted.index(item)::]
+                break
             if parsed_item.tag.POS in self.MORPHABLE_GRAMMEMES:
-                morphed_phrase_items.append(parsed_item.inflect({number_category, case}).word)
+                morphed_item = parsed_item.inflect({number_category, case})
+                # morphed_phrase_items.append(parsed_item.inflect({number_category, case}).word)
+                if morphed_item:
+                    morphed_phrase_items.append(morphed_item.word)
+                else:
+                    morphed_phrase_items.append(item)
             else:
                 morphed_phrase_items.append(item)
-        return morphed_phrase_items
+        return ''.join(morphed_phrase_items)
